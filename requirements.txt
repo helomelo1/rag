@@ -1,0 +1,9 @@
+chromadb
+sentence-transformers
+huggingface-hub
+pypdf
+beautifulsoup4
+requests
+python-dotenv
+rich
+tqdm
