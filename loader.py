@@ -27,7 +27,8 @@ def load_text(path: str) -> dict:
 
 
 def load_url(url: str) -> dict:
-    resp = requests.get(url, timeout=30)
+    headers = {"User-Agent": "Mozilla/5.0 (RAG Pipeline) requests/2.0"}
+    resp = requests.get(url, headers=headers, timeout=30)
     resp.raise_for_status()
 
     soup = BeautifulSoup(resp.text, "html.parser")

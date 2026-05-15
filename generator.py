@@ -16,27 +16,29 @@ def _build_prompt(query: str, context_chunks: List[Dict]) -> str:
     context_parts = []
     for i, chunk in enumerate(context_chunks, 1):
         source = chunk["metadata"].get("source", "unknown")
-        context_parts.append(f"[{i}] (source: {source})\n{chunk["text"]}")
+        context_parts.append(f"[{i}] (source: {source})\n{chunk['text']}")
 
-        context_block = "\n\n".join(context_parts)
+    context_block = "\n\n".join(context_parts)
 
-        return (
-            f"Context:\n{context_block}\n\n"
-            f"---\n"
-            f"Question: {query}\n"
-            f"Answer:"
-        )
+    return (
+        f"Context:\n{context_block}\n\n"
+        f"---\n"
+        f"Question: {query}\n"
+        f"Answer:"
+    )
 
 def generate(query: str, context_chunks: List[Dict]) -> str:
     client = InferenceClient(token=HF_TOKEN)
     prompt = _build_prompt(query, context_chunks)
 
-    response = client.text_generation(
-        prompt,
+    response = client.chat_completion(
         model=CHAT_MODEL,
-        max_new_tokens=512,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": prompt},
+        ],
+        max_tokens=512,
         temperature=0.3,
-        repetition_penalty=1.1
     )
 
-    return response.strip()
+    return response.choices[0].message.content.strip()

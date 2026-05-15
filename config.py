@@ -17,7 +17,7 @@ HF_TOKEN = os.getenv("HF_TOKEN", "")
 
 # Model configuration
 EMBED_MODEL = os.getenv("EMBED_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
-CHAT_MODEL = os.getenv("CHAT_MODEL", "mistralai/Mistral-7B-Instruct-v0.2")
+CHAT_MODEL = os.getenv("CHAT_MODEL", "meta-llama/Llama-3.1-8B-Instruct")
 
 # Chunking configuration
 CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "500"))

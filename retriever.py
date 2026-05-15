@@ -19,7 +19,7 @@ def retrieve(
     collection = _get_or_create_collection(client, collection_name)
 
     results = collection.query(
-        query_embedding=query_embedding,
+        query_embeddings=query_embedding,
         n_results=top_k,
         include=["documents", "metadatas", "distances"]
     )

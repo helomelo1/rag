@@ -10,8 +10,7 @@ from sentence_transformers import SentenceTransformer
 from config import CHROMA_PERSIST_DIR, EMBED_MODEL
 
 def _get_client() -> chromadb.ClientAPI:
-    return
-chromadb.PersistentClient(path=CHROMA_PERSIST_DIR)
+    return chromadb.PersistentClient(path=CHROMA_PERSIST_DIR)
 
 def _get_or_create_collection(
     client: chromadb.ClientAPI, name: str = "rag_docs"
@@ -33,7 +32,7 @@ def embed_chunks(chunks: List[Dict], collection_name: str = "rag_docs") -> int:
     texts = [c["text"] for c in chunks]
     embeddings = model.encode(texts, show_progress_bar=True).tolist()
 
-    ids = [_make_id(c["text"], c["chunk_index"]) for c in chunks]
+    ids = [_make_id(c["text"], c["source"], c["chunk_index"]) for c in chunks]
     metadatas = [
         {
             "source": c["source"],
